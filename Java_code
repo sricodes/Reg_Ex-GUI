@@ -1,0 +1,110 @@
+// code fo GUI of ReG EX
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.TextArea;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+
+
+public class Test {
+
+	private JFrame frame;
+	TextArea textInput = new TextArea();
+	TextArea RegexCmnd = new TextArea();
+	TextArea textOutput = new TextArea();
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Test window = new Test();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Test() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 600, 403);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("iconw.png")));
+		
+		
+		
+		JLabel lblGuiRegex = DefaultComponentFactory.getInstance().createLabel("GUI RegEx");
+		lblGuiRegex.setForeground(Color.BLUE);
+		lblGuiRegex.setBounds(246, 11, 92, 14);
+		frame.getContentPane().add(lblGuiRegex);
+		
+		
+		textInput.setText("Input Line");
+		textInput.setBounds(10, 37, 553, 105);
+		frame.getContentPane().add(textInput);
+		
+		
+		RegexCmnd.setText("[A-Za-z]");
+		RegexCmnd.setBounds(10, 168, 380, 47);
+		frame.getContentPane().add(RegexCmnd);
+		
+		
+		textOutput.setText("OutPut");      
+		textOutput.setBounds(10, 232, 564, 98);
+		frame.getContentPane().add(textOutput);
+		
+		JButton btnNewButton = new JButton("RegEx it !!");
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setForeground(Color.BLACK);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				System.out.println( "Button pressed ");	
+				
+				String line=textInput.getText(); // Input data
+				String Regex=RegexCmnd.getText();						
+				Pattern ptr = Pattern.compile(Regex);
+				Matcher m = ptr.matcher(line);				
+				StringBuilder out =new StringBuilder();
+				while (m.find()) {
+					out.append(m.group().trim());
+					out.append(" ");
+				}					
+				textOutput.setText(out.toString());
+				
+			}
+		});
+		btnNewButton.setBounds(452, 178, 111, 23);
+		frame.getContentPane().add(btnNewButton);
+		
+		JLabel lblcSriramIit = DefaultComponentFactory.getInstance().createLabel("  (C) Sriram IIT Guwahati Manas");
+		lblcSriramIit.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblcSriramIit.setForeground(Color.DARK_GRAY);
+		lblcSriramIit.setBounds(10, 340, 216, 14);
+		frame.getContentPane().add(lblcSriramIit);
+	}
+}
